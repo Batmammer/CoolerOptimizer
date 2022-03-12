@@ -27,6 +27,7 @@ public class CoolerOptimizer {
     }
 
     private void simulateFor2BigPumps(List<DataRow> dataRows) {
+        System.out.println("Simulation 2 x SZDY 194 320KW 6000V + 1 x SVEE 355ML 48s 500V");
         for (DataRow dataRow : dataRows) {
             Double sumFlow = 0d;
             for (FlexiblePump flexiblePump : dataRow.getFlexiblePumps()) {
@@ -55,6 +56,7 @@ public class CoolerOptimizer {
     }
 
     private void simulateFor1BigPump(List<DataRow> dataRows) {
+        System.out.println("Simulation 1 x SZDY 194 320KW 6000V + 1 x SVEE 355ML 48s 500V");
         for (DataRow dataRow : dataRows) {
             Double sumFlow = 0d;
             for (FlexiblePump flexiblePump : dataRow.getFlexiblePumps()) {
@@ -83,6 +85,7 @@ public class CoolerOptimizer {
     }
 
     private void simulateFor1BigPump2Flexible(List<DataRow> dataRows) {
+        System.out.println("Simulation 1 x SZDY 194 320KW 6000V + 2 x SVEE 355ML 48s 500V");
         Double flexPumpMaxFlow = 0d;
         Double flexPumpMaxEff = 0d;
         for (DataRow dataRow : dataRows) {
@@ -121,6 +124,7 @@ public class CoolerOptimizer {
     }
 
     private void calculateFlow(List<DataRow> dataRows) {
+        System.out.println("Normal simulation");
         for (DataRow dataRow : dataRows) {
             Double sumFlow = 0d;
             for (BigPump bigPump : dataRow.getBigPumps()) {
