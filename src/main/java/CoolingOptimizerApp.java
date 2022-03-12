@@ -3,7 +3,6 @@ import model.BigPump;
 import model.DataRow;
 import model.FlexiblePump;
 
-import java.io.File;
 import java.io.FileReader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,13 +16,12 @@ public class CoolingOptimizerApp {
             System.out.println("Usage CoolingOptimizer input.csv");
             System.exit(1);
         }
-        System.out.println((new File("abc")).getAbsolutePath());
-        readDataLineByLine(args[0]);
-
-
+        List<DataRow> dataRows = readDataLineByLine(args[0]);
+        CoolerOptimizer coolerOptimizer = new CoolerOptimizer();
+        coolerOptimizer.calculate(dataRows);
     }
 
-    public static void readDataLineByLine(String file)
+    public static List<DataRow> readDataLineByLine(String file)
     {
         List<DataRow> dataRows = new ArrayList<>();
         try {
@@ -40,6 +38,7 @@ public class CoolingOptimizerApp {
         catch (Exception e) {
             e.printStackTrace();
         }
+        return dataRows;
     }
 
     private static DataRow readDataRow(String[] nextRecord) {
@@ -47,17 +46,18 @@ public class CoolingOptimizerApp {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         dataRow.setDateTime(LocalDateTime.parse(nextRecord[0].split("\\+")[0], formatter));
         dataRow.setFlow(Double.parseDouble(nextRecord[1]) + Double.parseDouble(nextRecord[2]));
+        dataRow.setPressure((Double.parseDouble(nextRecord[3]) + Double.parseDouble(nextRecord[4])) / 2);
         List<BigPump> bigPumps = new ArrayList<>();
-        bigPumps.add(new BigPump(Double.parseDouble(nextRecord[3]), null));
-        bigPumps.add(new BigPump(Double.parseDouble(nextRecord[4]), null));
-        bigPumps.add(new BigPump(Double.parseDouble(nextRecord[5]), null));
-        bigPumps.add(new BigPump(Double.parseDouble(nextRecord[6]), null));
+        bigPumps.add(new BigPump(1, Double.parseDouble(nextRecord[5]), null));
+        bigPumps.add(new BigPump(2, Double.parseDouble(nextRecord[6]), null));
+        bigPumps.add(new BigPump(3, Double.parseDouble(nextRecord[7]), null));
+        bigPumps.add(new BigPump(4, Double.parseDouble(nextRecord[8]), null));
         dataRow.setBigPumps(bigPumps);
         List<FlexiblePump> flexiblePumps = new ArrayList<>();
-        flexiblePumps.add(new FlexiblePump(Double.parseDouble(nextRecord[7]),Double.parseDouble(nextRecord[8]),Double.parseDouble(nextRecord[9])));
-        flexiblePumps.add(new FlexiblePump(Double.parseDouble(nextRecord[10]),Double.parseDouble(nextRecord[11]),Double.parseDouble(nextRecord[12])));
+        flexiblePumps.add(new FlexiblePump(1, Double.parseDouble(nextRecord[9]),Double.parseDouble(nextRecord[10]),Double.parseDouble(nextRecord[11]), null));
+        flexiblePumps.add(new FlexiblePump(2, Double.parseDouble(nextRecord[12]),Double.parseDouble(nextRecord[13]),Double.parseDouble(nextRecord[14]), null));
         dataRow.setFlexiblePumps(flexiblePumps);
-        System.out.println(dataRow);
+//        System.out.println(dataRow);
         return dataRow;
     }
 }

@@ -9,7 +9,8 @@ import java.util.List;
 public class DataRow {
     private LocalDateTime dateTime;
     private Double flow;
-    private static final Double DESIRED_PRESSURE = 0.53;
+    public static final Double DESIRED_PRESSURE = 0.53;
+    private Double pressure;
     private List<BigPump> bigPumps;
     private List<FlexiblePump> flexiblePumps;
 
